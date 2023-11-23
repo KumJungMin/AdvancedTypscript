@@ -17,3 +17,21 @@ type tests = [
   Expect<Equal<BarType, number>>,
   Expect<Equal<BazType, boolean>>
 ];
+
+// Discriminated Union에서 인덱싱으로 타입을 추출할 수 있다.
+export type Event =
+  | {
+      type: "click";
+      event: MouseEvent;
+    }
+  | {
+      type: "focus";
+      event: FocusEvent;
+    }
+  | {
+      type: "keydown";
+      event: KeyboardEvent;
+    };
+
+type EventType = Event["type"];
+type tests2 = [Expect<Equal<EventType, "click" | "focus" | "keydown">>];
