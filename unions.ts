@@ -37,3 +37,18 @@ enum C {
   B,
   C,
 }
+
+// Extract: 유니온 타입에서 특정 타입을 추출하는 유틸리티 타입
+type Shape2 =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; size: number }
+  | { kind: "rectangle"; width: number; height: number };
+
+// 예제1. Shape2에서 kind가 "circle"와 "square"인 타입을 추출
+type T2 = Extract<Shape2, { kind: "circle" } | { kind: "square" }>;
+// type T2 = { kind: "circle"; radius: number } | { kind: "square"; size: number }
+
+// 예제2. template literal types를 이용해 동적으로 타입을 추출
+type Routes = "/users" | "/users/:id" | "/posts" | "/posts/:id";
+type DynamicRoutes = Extract<Routes, `${string}:${string}"`>;
+// type DynamicRoutes = "/users/:id" | "/posts/:id"
