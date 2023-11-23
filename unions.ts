@@ -52,3 +52,10 @@ type T2 = Extract<Shape2, { kind: "circle" } | { kind: "square" }>;
 type Routes = "/users" | "/users/:id" | "/posts" | "/posts/:id";
 type DynamicRoutes = Extract<Routes, `${string}:${string}"`>;
 // type DynamicRoutes = "/users/:id" | "/posts/:id"
+
+// template literal types: 문자열을 이용해 타입을 정의하는 방식
+type Foo = "product" | "comment";
+type Boo = "id";
+
+type Baz = `${Foo}_${Boo}`;
+// "product_id" | "comment_id"
