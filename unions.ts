@@ -59,3 +59,22 @@ type Boo = "id";
 
 type Baz = `${Foo}_${Boo}`;
 // "product_id" | "comment_id"
+
+// Exclude: 유니온 타입에서 특정 타입을 제거하는 유틸리티 타입
+// 예제1. T0는 "a" | "b" | "c"에서 "a"를 제거한 타입
+type T0 = Exclude<"a" | "b" | "c", "a">;
+// "b" | "c"
+
+// 예제2. T1는 "a" | "b" | "c"에서 "a"와 "b"를 제거한 타입
+type T1 = Exclude<"a" | "b" | "c", "a" | "b">;
+// "c"
+
+// 예제3. T2는 Shape2에서 kind가 "circle"가 아닌 타입을 추출
+type Shape3 =
+  | { kind: "circle"; radius: number }
+  | { kind: "square"; x: number }
+  | { kind: "triangle"; x: number; y: number };
+
+type T3 = Exclude<Shape3, { kind: "circle" }>;
+// { kind: "square"; x: number }
+// | { kind: "triangle"; x: number; y: number };
