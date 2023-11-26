@@ -19,3 +19,27 @@ type Routes = "/users" | "/users/:id" | "/products" | "/products/:id";
 type DynamicRoutes = Extract<Routes, `/${string}:id`>;
 
 type tests = [Expect<Equal<DynamicRoutes, "/users/:id" | "/products/:id">>];
+
+// Combination으로 Literal Types을 조합할 수 있다.
+type Top = "t-shirt" | "shirts" | "jacket";
+
+type Bottom = "jeans" | "skirt" | "slacks";
+
+type Outfit = `${Top} with ${Bottom}`;
+
+type tests2 = [
+  Expect<
+    Equal<
+      Outfit,
+      | "t-shirt with jeans"
+      | "t-shirt with skirt"
+      | "t-shirt with slacks"
+      | "shirts with jeans"
+      | "shirts with skirt"
+      | "shirts with slacks"
+      | "jacket with jeans"
+      | "jacket with skirt"
+      | "jacket with slacks"
+    >
+  >
+];
