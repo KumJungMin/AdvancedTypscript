@@ -43,3 +43,28 @@ type tests2 = [
     >
   >
 ];
+
+// 특정 조합을 가진 객체 타입 선언하는 법
+type First = "user" | "post" | "comment";
+type Second = "Id" | "Name";
+
+// Record<K, T>
+// K의 모든 프로퍼티를 T 타입으로 매핑한다.
+// Record는 객체 타입을 만들 때 유용하다.
+type ObjectOfKeys = Record<`${First}${Second}`, string>;
+
+type tests3 = [
+  Expect<
+    Equal<
+      ObjectOfKeys,
+      {
+        userId: string;
+        userName: string;
+        postId: string;
+        postName: string;
+        commentId: string;
+        commentName: string;
+      }
+    >
+  >
+];
