@@ -47,3 +47,29 @@ type tests2 = [
     >
   >
 ];
+
+interface Attributes {
+  firstName: string;
+  lastName: string;
+  age: number;
+}
+
+type AttributeGetters2 = {
+  // Capitalize<T>: T의 첫 글자를 대문자로 변환한다.
+  // [K in keyof Type as `변형한 키 형태`]
+
+  [K in keyof Attributes as `get${Capitalize<K>}`]: () => Attributes[K];
+};
+
+type tests3 = [
+  Expect<
+    Equal<
+      AttributeGetters2,
+      {
+        getFirstName: () => string;
+        getLastName: () => string;
+        getAge: () => number;
+      }
+    >
+  >
+];
