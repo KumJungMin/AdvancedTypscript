@@ -73,3 +73,40 @@ type tests3 = [
     >
   >
 ];
+
+// Object union 타입을 object로 변환하기
+type Route2 =
+  | {
+      route: "/";
+      search: {
+        page: string;
+        perPage: string;
+      };
+    }
+  | { route: "/about"; search: {} }
+  | { route: "/admin"; search: {} }
+  | { route: "/admin/users"; search: {} };
+
+// Route2[search]로 하면, union 타입이 나오기 때문에 R["search"]로 해야 한다.
+
+type RoutesObject3 = {
+  // K in 타입 as K["프로퍼티"]]: K["프로퍼티"]
+  [R in Route2 as R["route"]]: R["search"];
+};
+
+type tests4 = [
+  Expect<
+    Equal<
+      RoutesObject3,
+      {
+        "/": {
+          page: string;
+          perPage: string;
+        };
+        "/about": {};
+        "/admin": {};
+        "/admin/users": {};
+      }
+    >
+  >
+];
