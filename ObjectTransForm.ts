@@ -110,3 +110,25 @@ type tests4 = [
     >
   >
 ];
+
+// object에서 튜플 추출하기
+interface Values {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+// { 'email': ['email', 'string]}
+type ValuesAsUnionOfTuples1 = { [K in keyof Values]: [K, Values[K]] };
+
+type ValuesAsUnionOfTuples2 =
+  ValuesAsUnionOfTuples1[keyof ValuesAsUnionOfTuples1];
+
+type tests5 = [
+  Expect<
+    Equal<
+      ValuesAsUnionOfTuples2,
+      ["email", string] | ["firstName", string] | ["lastName", string]
+    >
+  >
+];
