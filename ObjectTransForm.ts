@@ -132,3 +132,22 @@ type tests5 = [
     >
   >
 ];
+
+// object key, value로 string union 만들기
+interface FruitMap {
+  apple: "red";
+  banana: "yellow";
+  orange: "orange";
+}
+
+type TransformedFruit1 = {
+  [K in keyof FruitMap]: `${K}:${FruitMap[K]}`;
+};
+
+type TransformedFruit2 = TransformedFruit1[keyof TransformedFruit1];
+
+type tests6 = [
+  Expect<
+    Equal<TransformedFruit2, "apple:red" | "banana:yellow" | "orange:orange">
+  >
+];
