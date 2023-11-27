@@ -142,12 +142,38 @@ interface FruitMap {
 
 type TransformedFruit1 = {
   [K in keyof FruitMap]: `${K}:${FruitMap[K]}`;
-};
-
-type TransformedFruit2 = TransformedFruit1[keyof TransformedFruit1];
+}[keyof FruitMap];
 
 type tests6 = [
   Expect<
-    Equal<TransformedFruit2, "apple:red" | "banana:yellow" | "orange:orange">
+    Equal<TransformedFruit1, "apple:red" | "banana:yellow" | "orange:orange">
+  >
+];
+
+// Object union을 string union으로 변형하기
+type Fruit =
+  | {
+      name: "apple";
+      color: "red";
+    }
+  | {
+      name: "banana";
+      color: "yellow";
+    }
+  | {
+      name: "orange";
+      color: "orange";
+    };
+
+// key에는 String, Number, Symbol만 가능하다.
+// 우회하는 방법은, [K in 타입 as K["프로퍼티"]]: K["프로퍼티"]로 한다.
+type TransformedFruitA = {
+  [K in Fruit as K["color"]]: `${K["name"]}:${K["color"]}`;
+};
+type TransformedFruitB = TransformedFruitA[Fruit["color"]];
+
+type tests7 = [
+  Expect<
+    Equal<TransformedFruitB, "apple:red" | "banana:yellow" | "orange:orange">
   >
 ];
