@@ -22,3 +22,28 @@ type tests = [
     >
   >
 ];
+
+// 2. Object value 타입 변형하기
+interface Attributes {
+  firstName: string;
+  lastName: string;
+  age: number;
+}
+
+// keyof를 사용하면, 객체의 key를 union 타입으로 추출할 수 있다.
+type AttributeGetters = {
+  [K in keyof Attributes]: () => Attributes[K];
+};
+
+type tests2 = [
+  Expect<
+    Equal<
+      AttributeGetters,
+      {
+        firstName: () => string;
+        lastName: () => string;
+        age: () => number;
+      }
+    >
+  >
+];
