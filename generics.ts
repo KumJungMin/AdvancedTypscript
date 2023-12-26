@@ -20,3 +20,25 @@ const oneString = returnWhatIPassIn<string>("matt");
 
 type tests = [Expect<Equal<typeof one, 1>>, Expect<Equal<typeof matt, "matt">>];
 type tests2 = [Expect<Equal<typeof oneNumber, number>>, Expect<Equal<typeof oneString, string>>];
+
+
+
+// ---------------------------------------------------------
+// 3. 여러 인자를 가진 제네릭
+// 여러 개의 인자 타입을 컨트롤해야하는 경우, <T1, T2, ...> 형식으로 선언하면 된다. 
+const returnBothOfWhatIPassIn = <T1, T2>(params: { a: T1; b: T2 }) => {
+    return {
+        first: params.a,
+        second: params.b,
+    };
+};
+const result2 = returnBothOfWhatIPassIn({ a: "a", b: 1});
+type test1 = Expect<
+    Equal<
+        typeof result2,
+        {
+            first: string;
+            second: number;
+        }
+    >
+>;
