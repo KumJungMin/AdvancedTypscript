@@ -111,3 +111,17 @@ type tests4 = [
         >
     >,
 ];
+
+
+// ---------------------------------------------------------
+// 5. 제네릭 클래스 만드는 법
+// 클래스명 뒤에 <T>를 붙여서 제네릭 클래스를 만들 수 있다.
+
+export class Component<T> {
+    private props: T;
+
+    constructor(props: T) {
+        this.props = props;
+    }
+    getProps = () => this.props;
+}
