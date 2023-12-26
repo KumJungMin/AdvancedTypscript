@@ -205,3 +205,21 @@ const obj2: Obj2<string> = {
   },
 }
 type tests7 = [Expect<Equal<typeof obj2, Record<string, { name: string }>>>];
+
+
+// ---------------------------------------------------------
+import { expect, it } from "vitest";
+// 제네릭을 사용해, 리턴되는 data의 타입을 정의할 수 있다.
+const fetchData = async <T>(url: string) => {
+    const data: T = await fetch(url).then((response) => response.json());
+    return data;
+};
+
+it("Should fetch data from an API", async () => {
+    const data = await fetchData<{ name: string }>(
+        "https://swapi.dev/api/people/1",
+    );
+    expect(data.name).toEqual("Luke Skywalker");
+
+    type tests = [Expect<Equal<typeof data, { name: string }>>];
+});
