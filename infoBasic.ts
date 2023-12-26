@@ -17,3 +17,24 @@ type tests = [
     // should return never
     Expect<Equal<GetDataValue<string>, never>>,
 ];
+
+
+// ----------------------------------------------
+
+interface MyComplexInterface<Event, Context, Name, Point> {
+    getEvent: () => Event;
+    getContext: () => Context;
+    getName: () => Name;
+    getPoint: () => Point;
+}
+
+type Example = MyComplexInterface<
+    "click",
+    "window",
+    "my-event",
+    { x: 12; y: 14 }
+>;
+// MyComplexInterface의 타입을 꺼내서 사용할 수 있도록 하는 타입을 만들수 있음
+type GetPoint<T> = T extends MyComplexInterface<any, any, any, infer U> ? U : never;
+
+type tests = [Expect<Equal<GetPoint<Example>, { x: 12; y: 14 }>>];
