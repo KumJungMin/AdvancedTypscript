@@ -190,3 +190,18 @@ makeEnum(["a", "b", "c"]);
 
 // @ts-expect-error
 makeEnum([]);
+
+
+// ---------------------------------------------------------
+// record와 제네릭의 조합
+type Obj2<T> = Record<string, {name: T}>;
+
+const obj2: Obj2<string> = {
+  Park: {
+      name: "Park",
+  },
+  Kim: {
+      name: "Kim",
+  },
+}
+type tests7 = [Expect<Equal<typeof obj2, Record<string, { name: string }>>>];
