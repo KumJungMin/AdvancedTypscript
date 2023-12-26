@@ -157,3 +157,18 @@ type tests5 = [
         >
     >,
 ];
+
+
+// ---------------------------------------------------------
+// 빈 객체를 제네릭으로 넘기면, 타입이 null, undefined를 가지지 못하도록 설정가능하다.
+export type Maybe<T extends {}> = unknown;
+
+type tests6 = [
+    Maybe<null>, // error
+    Maybe<undefined>, // error
+
+    Maybe<string>,
+    Maybe<false>,
+    Maybe<0>,
+    Maybe<"">,
+];
