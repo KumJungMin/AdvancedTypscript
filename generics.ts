@@ -125,3 +125,35 @@ export class Component<T> {
     }
     getProps = () => this.props;
 }
+
+// ---------------------------------------------------------
+// spread 연산자를 사용하면, 제네릭 타입을 확장할 수 있다.
+// T는 함수의 인자와 리턴 타입을 가지는 제네릭 타입
+// Parameters<T>는 함수의 인자 타입을 가지는 제네릭 타입
+// ReturnType<T>는 함수의 리턴 타입을 가지는 제네릭 타입
+
+type GetParametersAndReturnType<T extends (...args) => any > = {
+    params: Parameters<T>; // 함수의 인자 타입을 가짐
+    returnValue: ReturnType<T>; // 함수의 리턴 타입을 가짐
+};
+
+type tests5 = [
+    Expect<
+        Equal<
+            GetParametersAndReturnType<() => string>,
+            { params: []; returnValue: string }
+        >
+    >,
+    Expect<
+        Equal<
+            GetParametersAndReturnType<(s: string) => void>,
+            { params: [string]; returnValue: void }
+        >
+    >,
+    Expect<
+        Equal<
+            GetParametersAndReturnType<(n: number, b: boolean) => number>,
+            { params: [number, boolean]; returnValue: number }
+        >
+    >,
+];
