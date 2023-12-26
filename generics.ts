@@ -81,3 +81,33 @@ type tests3 = [
         >
     >,
 ];
+
+
+// ---------------------------------------------------------
+// 4. 제네릭 타입에 기본값을 넘기면, 타입을 넘기지 않아도 기본값으로 타입이 정의된다.
+
+type CreateDataShape3<TData, TError = undefined> = {
+    data: TData;
+    error: TError;
+};
+
+type tests4 = [
+    Expect<
+        Equal<
+            CreateDataShape3<string>,
+            {
+                data: string;
+                error: undefined;
+            }
+        >
+    >,
+    Expect<
+        Equal<
+            CreateDataShape3<boolean, SyntaxError>,
+            {
+                data: boolean;
+                error: SyntaxError;
+            }
+        >
+    >,
+];
