@@ -38,3 +38,21 @@ type Example = MyComplexInterface<
 type GetPoint<T> = T extends MyComplexInterface<any, any, any, infer U> ? U : never;
 
 type tests = [Expect<Equal<GetPoint<Example>, { x: 12; y: 14 }>>];
+
+
+// ----------------------------------------------
+
+type Names = [
+    "Junsuk Park",
+    "Bill Evans",
+    "Stan Getz",
+];
+
+// `${infer _} ${infer LastName}` 패턴을 가지는 타입에서 infer로 추론된 타입을 꺼내서 사용할 수 있음
+type GetSurname<T> = T extends `${infer _} ${infer LastName}` ? LastName : never; 
+
+type tests3 = [
+    Expect<Equal<GetSurname<Names[0]>, "Park">>,
+    Expect<Equal<GetSurname<Names[1]>, "Evans">>,
+    Expect<Equal<GetSurname<Names[2]>, "Getz">>,
+];
