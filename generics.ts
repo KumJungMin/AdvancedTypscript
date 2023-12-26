@@ -42,3 +42,42 @@ type test1 = Expect<
         }
     >
 >;
+
+
+// ---------------------------------------------------------
+// 3. 타입을 제네릭으로 선언하는 방법
+
+type CreateDataShape <T1, T2> = {
+    data: T1;
+    error: T2;
+};
+
+type tests3 = [
+    Expect<
+        Equal<
+            CreateDataShape<string, TypeError>,
+            {
+                data: string;
+                error: TypeError;
+            } 
+        >
+    >,
+    Expect<
+        Equal<
+            CreateDataShape<number, Error>,
+            {
+                data: number;
+                error: Error;
+            }
+        >
+    >,
+    Expect<
+        Equal<
+            CreateDataShape<boolean, SyntaxError>,
+            {
+                data: boolean;
+                error: SyntaxError;
+            }
+        >
+    >,
+];
